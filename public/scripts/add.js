@@ -4,19 +4,18 @@ if (formAddGame) {
   formAddGame.addEventListener('submit', async (e) => {
     e.preventDefault();
     const { title, description, img, adult } = e.target;
-    // console.log(title.value, description.value, img.value, adult.checked);
+    const formData = new FormData();
+    console.log(img.files[0]);
+    formData.append('img', img.files[0]);
+    formData.append('title', title.value);
+    formData.append('description', description.value);
+    formData.append('adult', adult.checked);
+
     const res = await fetch('/api/games', {
       method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: title.value,
-        description: description.value,
-        img: img.value,
-        adult: adult.checked,
-      }),
+      body: formData,
     });
+
     const data = await res.json();
     if (data.message === 'success') {
       formAddGame.reset();

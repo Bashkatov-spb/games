@@ -1,6 +1,29 @@
 const router = require('express').Router();
 const GameItem = require('../../components/GameItem');
 const { Game } = require('../../db/models');
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/img');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+// app.post('/upload', upload.single('img'), function (req, res, next) {
+//   try {
+//     console.log(req.file);
+//     console.log(req.body);
+//     res.end();
+//     // req.file - файл `avatar`
+//     // req.body сохранит текстовые поля, если они будут
+//   } catch ({ message }) {
+//     console.log({ message });
+//   }
+// });
 
 router.get('/', async (req, res) => {
   const games = await Game.findAll();
@@ -13,13 +36,14 @@ router.get('/', async (req, res) => {
 //   res.json(game);
 // });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('img'), async (req, res) => {
   try {
-    const { title, description, img, adult } = req.body;
+    const { title, description, adult } = req.body;
+    const newFileUrl = `/img/${req.file.originalname}`;
     const game = await Game.create({
       title,
       description,
-      img,
+      img: newFileUrl,
       adult,
       player_id: req.session.user_id,
     });
