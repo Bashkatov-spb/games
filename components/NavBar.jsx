@@ -28,7 +28,7 @@ function NavBar({ user }) {
                   Favorites
                 </a>
               </li>
-              <li>Hello, {user.email}!</li>
+              <li>Hello, {user.name}!</li>
               <li className="nav-item">
                 <a className="nav-link" href="/api/auth/logout">
                   LogOut
