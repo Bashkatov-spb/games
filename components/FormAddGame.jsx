@@ -21,7 +21,7 @@ function FormAddGame({ title }) {
           <label htmlFor="exampleInputPassword1" className="form-label">
             Img
           </label>
-          <input name="img" type="text" className="form-control" id="exampleInputPassword1" />
+          <input name="img" type="file" className="form-control" id="exampleInputPassword1" />
         </div>
         <div className="mb-3">
           <label>for adult?</label>
