@@ -1,10 +1,12 @@
 const router = require('express').Router();
 const GameItem = require('../../components/GameItem');
 const { Game } = require('../../db/models');
+const path = require('path');
+const absolutePath = path.join(__dirname, '..', '..', 'public/img');
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '../../public/img');
+    cb(null, absolutePath);
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
